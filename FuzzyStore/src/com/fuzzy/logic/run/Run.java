@@ -3,6 +3,9 @@ package com.fuzzy.logic.run;
 import java.net.UnknownHostException;
 
 import com.fuzzy.logic.algoritm.mongdb.DbAccesConnection;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
 import com.mongodb.MongoException;
 
 public class Run {
@@ -14,6 +17,25 @@ public class Run {
 		dbAcces.setDbObject("localhost", 27017, "test");
 		System.out.print(dbAcces.getCollectionNames());
 
-		System.out.print(dbAcces.getCollection().findOne());
+		DBCollection coll = dbAcces.getCollection();
+		System.out.print(coll.find());
+		
+		DBCursor cur = coll.find();
+		
+		while(cur.hasNext()) {
+			System.out.println(cur.next());
+		}
+		
+		
+		BasicDBObject query = new BasicDBObject();
+
+        query.put("i", 71);
+
+        cur = coll.find(query);
+
+        while(cur.hasNext()) {
+            System.out.println(cur.next());
+        }
+        
 	}
 }
